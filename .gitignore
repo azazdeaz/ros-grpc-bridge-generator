@@ -1,5 +1,6 @@
-generated
 venv
+.ipynb_checkpoints
+log
 
 # ROS things
 cmake_install.cmake

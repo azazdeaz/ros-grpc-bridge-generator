@@ -1,27 +1,9 @@
 #!/usr/bin/env python
 
-from concurrent import futures
-import time
-import math
-import logging
+try:
+    import generated.grpc_server
+except ImportError as e:
+    print("Can't import generated/grcp_server. Did you run the generate script? (ie. '$ rosrun ros_grpc_wrapper generate')")
+    raise e
 
-import grpc
-
-import generated.ros_pb2 as ros_pb
-import generated.ros_pb2_grpc as ros_grpc
-
-import rostopic
-import rospy
-import threading
-import time
-import roslib.message
-# TODO ask user to run the generate script if it's not found
-from generated.grpc_server import create_server
-
-if __name__ == '__main__':
-    rospy.init_node('ros_grpc_server', anonymous=True)
-    server = create_server()
-    server.add_insecure_port('[::]:50051')
-    server.start()
-    print('server is running')
-    rospy.spin()
+generated.grpc_server.parse_args_and_run_server()
