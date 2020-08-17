@@ -1,0 +1,4 @@
+#!/bin/sh
+cd "${0%/*}"
+cd ./generated
+python3 grpc_server.py
