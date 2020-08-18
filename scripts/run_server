@@ -1,4 +1,11 @@
 #!/bin/sh
-cd "${0%/*}"
-cd ./generated
-python3 grpc_server.py
+cd "${0%/*}" # change the working dir to the one where the script is (scripts/)
+
+FILE=./generated/grpc_server.py
+if [ -f "$FILE" ]; then
+    cd ./generated
+    python3 grpc_server.py
+    echo "$FILE exists."
+else 
+    echo "$FILE does not exist. Did you run 'rosrun grpc_api_generator generate'?"
+fi
