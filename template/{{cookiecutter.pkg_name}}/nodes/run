@@ -1,0 +1,8 @@
+
+#!/usr/bin/env python3
+
+from {{cookiecutter.pkg_name}} import run_server
+
+if __name__ == "__main__":
+    run_server() 
+    

@@ -52,6 +52,7 @@
   <build_depend>rospy</build_depend>
   <build_depend>python3-grpc-tools</build_depend>
   <build_depend>python3-grpcio</build_depend>
+  <build_depend>python-cookiecutter</build_depend>
   <build_depend>jupyter-notebook</build_depend>
   <build_depend>python3-papermill-pip</build_depend>
   <build_depend>actionlib</build_depend>
@@ -60,6 +61,7 @@
   <exec_depend>rospy</exec_depend>
   <exec_depend>python3-grpc-tools</exec_depend>
   <exec_depend>python3-grpcio</exec_depend>
+  <exec_depend>python-cookiecutter</exec_depend>
   <exec_depend>jupyter-notebook</exec_depend>
   <exec_depend>python3-papermill-pip</exec_depend>
   <exec_depend>actionlib</exec_depend>

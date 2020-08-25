@@ -1,3 +1,4 @@
 #!/bin/sh
 cd "${0%/*}" # change the working dir to the one where the script is (scripts/)
-papermill generate.ipynb ../log/generate-out.ipynb "$@"
+
+papermill generate.ipynb ../log/generate-out.ipynb 

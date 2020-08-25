@@ -1,0 +1,17 @@
+
+syntax = 'proto3';
+
+package ros;
+
+message Empty {}
+
+message Time {
+  uint32 secs = 1;
+  uint32 nsecs = 2;
+}
+
+message Duration {
+  int32 secs = 1;
+  int32 nsecs = 2;
+}
+
