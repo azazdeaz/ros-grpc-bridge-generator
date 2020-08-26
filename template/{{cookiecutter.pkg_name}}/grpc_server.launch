@@ -1,7 +1,0 @@
-<launch>
-    <node name="run_grpc" pkg="{{cookiecutter.pkg_name}}" type="run">
-        <!-- <env name="ROS_NAMESPACE" value="gen" /> -->
-        <param name="address" value="localhost:3456" />
-    </node>
-    <!-- <node name="grpc_server" pkg="grpc_api_generator" type="run_server" /> -->
-</launch>

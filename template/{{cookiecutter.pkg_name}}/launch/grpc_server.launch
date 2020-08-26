@@ -1,0 +1,5 @@
+<launch>
+    <node name="run_grpc" pkg="{{cookiecutter.pkg_name}}" type="run">
+        <param name="address" value="localhost:50051" />
+    </node>
+</launch>

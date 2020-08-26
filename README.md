@@ -1,5 +1,13 @@
 :construction: wip
 
+# gRPC API generator
+## Experimental gRPC server generator.
+
+This tool can snapshot the running ROS topics and services and build a matching gRPC server
+ - The generated server will be implemented as a pyhton ROS package
+ - Running topics and services will be saved in a snapshot.ini file which you can edit (or build manually) befor generating the gRPC server
+ - It's implemented as a Jupyter notebook and a cookiecutter template so feel free to try changes and suggest modifications :)
+
 ## Install
 Clone the repo into a catkin workspace:
 ```sh
@@ -14,9 +22,9 @@ rosdep install --from-paths src --ignore-src -r -y
 ```
 
 ## Usage
-First, start the necessary ROS nodes to make the topics and services visible.
+1. ### Start the necessary ROS nodes to make the topics and services visible.
 
-To generate the server
+2. ### Generate the server
 ```
 rosrun grpc_api_generator generate
 ```
@@ -24,7 +32,7 @@ rosrun grpc_api_generator generate
    - `pkg_name`: the name of the generated package (=`grpc_api`)
    - `snapshot_path`: (=`<new_pkg>/snapshot.ini`)
 
-To run the generated server
+3. ### Run the generated server
 ```
 rosrun <generated pkg name (default=`grpc_api`)> run
 ```
@@ -40,4 +48,6 @@ rosrun grpc_api_generator notebook
 ```
 Executing this notebook is equvalent to running `generate`.
 
-## Nodes
+## Example
+
+You can find an example catkin workspace at https://github.com/azazdeaz/ros-grpc-api-generator-example
