@@ -1,0 +1,297 @@
+
+syntax = 'proto3';
+
+package ros;
+
+message Empty {}
+
+message Time {
+  uint32 secs = 1;
+  uint32 nsecs = 2;
+}
+
+message Duration {
+  int32 secs = 1;
+  int32 nsecs = 2;
+}
+
+message actionlib_msgs {
+  message GoalID {
+    Time stamp = 1;
+    string id = 2;
+  }
+  message GoalStatus {
+    actionlib_msgs.GoalID goal_id = 1;
+    Time stamp = 2;
+    string id = 3;
+    uint32 status = 4;
+    string text = 5;
+  }
+  message GoalStatusArray {
+    std_msgs.Header header = 1;
+    repeated actionlib_msgs.GoalStatus status_list = 2;
+  }
+}
+
+message geometry_msgs {
+  message Twist {
+    geometry_msgs.Vector3 linear = 1;
+    geometry_msgs.Vector3 angular = 2;
+  }
+  message Vector3 {
+    double x = 1;
+    double y = 2;
+    double z = 3;
+  }
+}
+
+message roscpp {
+  message GetLoggersRequest {
+  }
+  message GetLoggersResponse {
+    repeated roscpp.Logger loggers = 1;
+  }
+  message Logger {
+    string name = 1;
+    string level = 2;
+  }
+  message SetLoggerLevelRequest {
+    string logger = 1;
+    string level = 2;
+  }
+  message SetLoggerLevelResponse {
+  }
+}
+
+message rosgraph_msgs {
+  message Log {
+    std_msgs.Header header = 1;
+    int32 level = 2;
+    string name = 3;
+    string msg = 4;
+    string file = 5;
+    string function = 6;
+    uint32 line = 7;
+    repeated string topics = 8;
+  }
+}
+
+message std_msgs {
+  message Header {
+    uint32 seq = 1;
+    Time stamp = 2;
+    string frame_id = 3;
+  }
+}
+
+message std_srvs {
+  message EmptyRequest {
+  }
+  message EmptyResponse {
+  }
+}
+
+message turtle_actionlib {
+  message ShapeActionFeedback {
+    std_msgs.Header header = 1;
+    actionlib_msgs.GoalStatus status = 2;
+    turtle_actionlib.ShapeFeedback feedback = 3;
+  }
+  message ShapeActionGoal {
+    std_msgs.Header header = 1;
+    actionlib_msgs.GoalID goal_id = 2;
+    turtle_actionlib.ShapeGoal goal = 3;
+  }
+  message ShapeActionResult {
+    std_msgs.Header header = 1;
+    actionlib_msgs.GoalStatus status = 2;
+    turtle_actionlib.ShapeResult result = 3;
+  }
+  message ShapeFeedback {
+  }
+  message ShapeGoal {
+    int32 edges = 1;
+    float radius = 2;
+  }
+  message ShapeResult {
+    float interior_angle = 1;
+    float apothem = 2;
+  }
+}
+
+message turtlesim {
+  message Color {
+    uint32 r = 1;
+    uint32 g = 2;
+    uint32 b = 3;
+  }
+  message KillRequest {
+    string name = 1;
+  }
+  message KillResponse {
+  }
+  message Pose {
+    float x = 1;
+    float y = 2;
+    float theta = 3;
+    float linear_velocity = 4;
+    float angular_velocity = 5;
+  }
+  message SetPenRequest {
+    uint32 r = 1;
+    uint32 g = 2;
+    uint32 b = 3;
+    uint32 width = 4;
+    uint32 off = 5;
+  }
+  message SetPenResponse {
+  }
+  message SpawnRequest {
+    float x = 1;
+    float y = 2;
+    float theta = 3;
+    string name = 4;
+  }
+  message SpawnResponse {
+    string name = 1;
+  }
+  message TeleportAbsoluteRequest {
+    float x = 1;
+    float y = 2;
+    float theta = 3;
+  }
+  message TeleportAbsoluteResponse {
+  }
+  message TeleportRelativeRequest {
+    float linear = 1;
+    float angular = 2;
+  }
+  message TeleportRelativeResponse {
+  }
+}
+
+
+service rosout {
+    rpc Publish(rosgraph_msgs.Log) returns (Empty);
+    rpc Subscribe(Empty) returns (stream rosgraph_msgs.Log);
+}
+
+
+service rosout_agg {
+    rpc Publish(rosgraph_msgs.Log) returns (Empty);
+    rpc Subscribe(Empty) returns (stream rosgraph_msgs.Log);
+}
+
+
+service shapes_cancel {
+    rpc Publish(actionlib_msgs.GoalID) returns (Empty);
+    rpc Subscribe(Empty) returns (stream actionlib_msgs.GoalID);
+}
+
+
+service shapes_feedback {
+    rpc Publish(turtle_actionlib.ShapeActionFeedback) returns (Empty);
+    rpc Subscribe(Empty) returns (stream turtle_actionlib.ShapeActionFeedback);
+}
+
+
+service shapes_goal {
+    rpc Publish(turtle_actionlib.ShapeActionGoal) returns (Empty);
+    rpc Subscribe(Empty) returns (stream turtle_actionlib.ShapeActionGoal);
+}
+
+
+service shapes_result {
+    rpc Publish(turtle_actionlib.ShapeActionResult) returns (Empty);
+    rpc Subscribe(Empty) returns (stream turtle_actionlib.ShapeActionResult);
+}
+
+
+service shapes_status {
+    rpc Publish(actionlib_msgs.GoalStatusArray) returns (Empty);
+    rpc Subscribe(Empty) returns (stream actionlib_msgs.GoalStatusArray);
+}
+
+
+service turtle1_cmd_vel {
+    rpc Publish(geometry_msgs.Twist) returns (Empty);
+    rpc Subscribe(Empty) returns (stream geometry_msgs.Twist);
+}
+
+
+service turtle1_color_sensor {
+    rpc Publish(turtlesim.Color) returns (Empty);
+    rpc Subscribe(Empty) returns (stream turtlesim.Color);
+}
+
+
+service turtle1_pose {
+    rpc Publish(turtlesim.Pose) returns (Empty);
+    rpc Subscribe(Empty) returns (stream turtlesim.Pose);
+}
+
+
+service clear {
+    rpc Call(std_srvs.EmptyRequest) returns (std_srvs.EmptyResponse);
+}
+
+
+service kill {
+    rpc Call(turtlesim.KillRequest) returns (turtlesim.KillResponse);
+}
+
+
+service reset {
+    rpc Call(std_srvs.EmptyRequest) returns (std_srvs.EmptyResponse);
+}
+
+
+service rosout_get_loggers {
+    rpc Call(roscpp.GetLoggersRequest) returns (roscpp.GetLoggersResponse);
+}
+
+
+service rosout_set_logger_level {
+    rpc Call(roscpp.SetLoggerLevelRequest) returns (roscpp.SetLoggerLevelResponse);
+}
+
+
+service shapes_get_loggers {
+    rpc Call(roscpp.GetLoggersRequest) returns (roscpp.GetLoggersResponse);
+}
+
+
+service shapes_set_logger_level {
+    rpc Call(roscpp.SetLoggerLevelRequest) returns (roscpp.SetLoggerLevelResponse);
+}
+
+
+service sim_get_loggers {
+    rpc Call(roscpp.GetLoggersRequest) returns (roscpp.GetLoggersResponse);
+}
+
+
+service sim_set_logger_level {
+    rpc Call(roscpp.SetLoggerLevelRequest) returns (roscpp.SetLoggerLevelResponse);
+}
+
+
+service spawn {
+    rpc Call(turtlesim.SpawnRequest) returns (turtlesim.SpawnResponse);
+}
+
+
+service turtle1_set_pen {
+    rpc Call(turtlesim.SetPenRequest) returns (turtlesim.SetPenResponse);
+}
+
+
+service turtle1_teleport_absolute {
+    rpc Call(turtlesim.TeleportAbsoluteRequest) returns (turtlesim.TeleportAbsoluteResponse);
+}
+
+
+service turtle1_teleport_relative {
+    rpc Call(turtlesim.TeleportRelativeRequest) returns (turtlesim.TeleportRelativeResponse);
+}
+
