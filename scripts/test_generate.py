@@ -11,6 +11,7 @@ from os.path import isfile, join
 import os
 from pathlib import Path
 import difflib
+import shutil
 
 PKG = 'grpc_api_generator'
 rospack = rospkg.RosPack()
@@ -23,7 +24,12 @@ EXPECTED_PATH = join(rospack.get_path(PKG), 'test/expected')
 class TestGeneratedPackages(unittest.TestCase):
     def _match_packages(self, pkg_name):
         """Compare a pkg in the expected and the result folder"""
-        for path_exp in Path(join(EXPECTED_PATH, pkg_name)).rglob('*'):
+        
+        path_exp_pkg = Path(join(EXPECTED_PATH, pkg_name))
+        self.assertTrue(path_exp_pkg.exists(
+        ), 'Can\'t find "{}" folder in test/expected. If you just added a new snapshot to test/snapshots, move the pkg from test/result to test/expected.'.format(pkg_name))
+        
+        for path_exp in path_exp_pkg.rglob('*'):
             if not path_exp.is_file():
                 continue
 
@@ -52,6 +58,11 @@ class TestGeneratedPackages(unittest.TestCase):
                 pkg_name:={pkg_name} \
                 pkgs_root:={result_path}
             '''
+
+        # clear the previous results
+        if Path(RESULT_PATH).exists():
+            shutil.rmtree(Path(RESULT_PATH))
+
         for f in listdir(SNAPSHOTS_PATH):
             if f.endswith('.ini'):
                 pkg_name = f[:-4]
