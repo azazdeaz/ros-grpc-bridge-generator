@@ -19,20 +19,23 @@ and run rosdep install
 # in your_catkit_ws
 rosdep update
 rosdep install --from-paths src --ignore-src -r -y
+catkin_make
 ```
 
 ## Usage
-1. ### Start the necessary ROS nodes to make the topics and services visible.
+1. #### Start the necessary ROS nodes to make the topics and services visible.
 
-2. ### Generate the server
-```
+2. #### Generate the server
+```sh
 roslaunch grpc_api_generator generate.launch
+catkin_make
 ```
  - see the available arguments in the [generate.launch](launch/generate.launch)
 
-3. ### Run the generated server
-```
-rosrun <generated pkg name (default=`grpc_api`)> run
+3. #### Run the generated server
+```sh
+# The default generated pkg name is `grpc_api`
+rosrun grpc_api run
 ```
  - Options: 
     - `address`: 'host:port: host and port of the gRPC server to connect to. default=`[::]:50051`
