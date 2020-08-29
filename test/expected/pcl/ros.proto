@@ -1,0 +1,137 @@
+
+syntax = 'proto3';
+
+package ros;
+
+message Empty {}
+
+message Time {
+  uint32 secs = 1;
+  uint32 nsecs = 2;
+}
+
+message Duration {
+  int32 secs = 1;
+  int32 nsecs = 2;
+}
+
+message roscpp {
+  message GetLoggersRequest {
+  }
+  message GetLoggersResponse {
+    repeated roscpp.Logger loggers = 1;
+  }
+  message Logger {
+    string name = 1;
+    string level = 2;
+  }
+  message SetLoggerLevelRequest {
+    string logger = 1;
+    string level = 2;
+  }
+  message SetLoggerLevelResponse {
+  }
+}
+
+message rosgraph_msgs {
+  /**
+   * DEBUG=1
+   * INFO=2
+   * WARN=4
+   * ERROR=8
+   * FATAL=16
+   */
+  message Log {
+    std_msgs.Header header = 1;
+    int32 level = 2;
+    string name = 3;
+    string msg = 4;
+    string file = 5;
+    string function = 6;
+    uint32 line = 7;
+    repeated string topics = 8;
+  }
+}
+
+message sensor_msgs {
+  message PointCloud2 {
+    std_msgs.Header header = 1;
+    uint32 height = 2;
+    uint32 width = 3;
+    repeated sensor_msgs.PointField fields = 4;
+    bool is_bigendian = 5;
+    uint32 point_step = 6;
+    uint32 row_step = 7;
+    bytes data = 8;
+    bool is_dense = 9;
+  }
+  /**
+   * INT8=1
+   * UINT8=2
+   * INT16=3
+   * UINT16=4
+   * INT32=5
+   * UINT32=6
+   * FLOAT32=7
+   * FLOAT64=8
+   */
+  message PointField {
+    string name = 1;
+    uint32 offset = 2;
+    uint32 datatype = 3;
+    uint32 count = 4;
+  }
+}
+
+message std_msgs {
+  message Header {
+    uint32 seq = 1;
+    Time stamp = 2;
+    string frame_id = 3;
+  }
+}
+
+
+service narrow_stereo_textured_points2 {
+    rpc Publish(sensor_msgs.PointCloud2) returns (Empty);
+    rpc Subscribe(Empty) returns (stream sensor_msgs.PointCloud2);
+}
+
+
+service output {
+    rpc Publish(sensor_msgs.PointCloud2) returns (Empty);
+    rpc Subscribe(Empty) returns (stream sensor_msgs.PointCloud2);
+}
+
+
+service rosout {
+    rpc Publish(rosgraph_msgs.Log) returns (Empty);
+    rpc Subscribe(Empty) returns (stream rosgraph_msgs.Log);
+}
+
+
+service rosout_agg {
+    rpc Publish(rosgraph_msgs.Log) returns (Empty);
+    rpc Subscribe(Empty) returns (stream rosgraph_msgs.Log);
+}
+
+
+service my_pcl_tutorial_get_loggers {
+    rpc Call(roscpp.GetLoggersRequest) returns (roscpp.GetLoggersResponse);
+}
+
+
+service my_pcl_tutorial_set_logger_level {
+    rpc Call(roscpp.SetLoggerLevelRequest) returns (roscpp.SetLoggerLevelResponse);
+}
+
+
+service rosout_get_loggers {
+    rpc Call(roscpp.GetLoggersRequest) returns (roscpp.GetLoggersResponse);
+}
+
+
+service rosout_set_logger_level {
+    rpc Call(roscpp.SetLoggerLevelRequest) returns (roscpp.SetLoggerLevelResponse);
+}
+

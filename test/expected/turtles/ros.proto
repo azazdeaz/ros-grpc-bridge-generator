@@ -20,6 +20,18 @@ message actionlib_msgs {
     Time stamp = 1;
     string id = 2;
   }
+  /**
+   * PENDING=0
+   * ACTIVE=1
+   * PREEMPTED=2
+   * SUCCEEDED=3
+   * ABORTED=4
+   * REJECTED=5
+   * PREEMPTING=6
+   * RECALLING=7
+   * RECALLED=8
+   * LOST=9
+   */
   message GoalStatus {
     actionlib_msgs.GoalID goal_id = 1;
     Time stamp = 2;
@@ -64,6 +76,13 @@ message roscpp {
 }
 
 message rosgraph_msgs {
+  /**
+   * DEBUG=1
+   * INFO=2
+   * WARN=4
+   * ERROR=8
+   * FATAL=16
+   */
   message Log {
     std_msgs.Header header = 1;
     int32 level = 2;

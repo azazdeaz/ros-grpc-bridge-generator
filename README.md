@@ -53,12 +53,16 @@ rosrun grpc_api_generator notebook
 ```
 Executing this notebook is equvalent to running `generate`.
 
+## Notes
+ - Protobuf has no equivalent for constants in ROS messages so they are just added as comments to the proto message definitions.
+ - `uint8[]` and `char[]` ROS array types are represented as `bytes` in Protobuf (like in the [python msg generator](http://docs.ros.org/indigo/api/rospy_message_converter/html/namespacerospy__message__converter_1_1message__converter.html#ab92670982d5f9db6e765deff0ed9eeff))
+
 ## Tests
 
 The end-to-end tests are a bunch of snapshot files in the test/snapshots folder and their pre-generated packages in the test/expected folder.
 
-Running `rostest grpc_api_generator generate.test` will regenerate these packages in the result folder and compare them with the expected folder. It will fail for any changes. To update the tests just override the files in the expected folder.
+Running `rostest grpc_api_generator generate.test` will regenerate these packages in the test/result folder and compare them with the expected folder. It will fail for any changes. To update the tests just override the files in the expected folder.
 
-To add a new test, copy a snapshot file in the test/snapshots, run the tests, and move the generated pkg from the result to the expected folder.
+To add a new test, copy a snapshot file in test/snapshots, run the tests, and move the generated pkg from the result to the expected folder.
 
 There are also some doctests in the generate.ipynb but only to make the development easier. They will run with the notebook.
