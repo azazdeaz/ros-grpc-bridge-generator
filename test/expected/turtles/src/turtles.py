@@ -205,9 +205,6 @@ class shapes_feedbackServicer(ros_grpc.shapes_feedbackServicer):
         ros_msg.status.goal_id.stamp.secs = pb_msg.status.goal_id.stamp.secs
         ros_msg.status.goal_id.stamp.nsecs = pb_msg.status.goal_id.stamp.nsecs
         ros_msg.status.goal_id.id = pb_msg.status.goal_id.id
-        ros_msg.status.stamp.secs = pb_msg.status.stamp.secs
-        ros_msg.status.stamp.nsecs = pb_msg.status.stamp.nsecs
-        ros_msg.status.id = pb_msg.status.id
         ros_msg.status.status = pb_msg.status.status
         ros_msg.status.text = pb_msg.status.text
 
@@ -240,9 +237,6 @@ class shapes_feedbackServicer(ros_grpc.shapes_feedbackServicer):
                 pb_msg.status.goal_id.stamp.secs = ros_msg.status.goal_id.stamp.secs
                 pb_msg.status.goal_id.stamp.nsecs = ros_msg.status.goal_id.stamp.nsecs
                 pb_msg.status.goal_id.id = ros_msg.status.goal_id.id
-                pb_msg.status.stamp.secs = ros_msg.status.stamp.secs
-                pb_msg.status.stamp.nsecs = ros_msg.status.stamp.nsecs
-                pb_msg.status.id = ros_msg.status.id
                 pb_msg.status.status = ros_msg.status.status
                 pb_msg.status.text = ros_msg.status.text
 
@@ -323,9 +317,6 @@ class shapes_resultServicer(ros_grpc.shapes_resultServicer):
         ros_msg.status.goal_id.stamp.secs = pb_msg.status.goal_id.stamp.secs
         ros_msg.status.goal_id.stamp.nsecs = pb_msg.status.goal_id.stamp.nsecs
         ros_msg.status.goal_id.id = pb_msg.status.goal_id.id
-        ros_msg.status.stamp.secs = pb_msg.status.stamp.secs
-        ros_msg.status.stamp.nsecs = pb_msg.status.stamp.nsecs
-        ros_msg.status.id = pb_msg.status.id
         ros_msg.status.status = pb_msg.status.status
         ros_msg.status.text = pb_msg.status.text
         ros_msg.result.interior_angle = pb_msg.result.interior_angle
@@ -360,9 +351,6 @@ class shapes_resultServicer(ros_grpc.shapes_resultServicer):
                 pb_msg.status.goal_id.stamp.secs = ros_msg.status.goal_id.stamp.secs
                 pb_msg.status.goal_id.stamp.nsecs = ros_msg.status.goal_id.stamp.nsecs
                 pb_msg.status.goal_id.id = ros_msg.status.goal_id.id
-                pb_msg.status.stamp.secs = ros_msg.status.stamp.secs
-                pb_msg.status.stamp.nsecs = ros_msg.status.stamp.nsecs
-                pb_msg.status.id = ros_msg.status.id
                 pb_msg.status.status = ros_msg.status.status
                 pb_msg.status.text = ros_msg.status.text
                 pb_msg.result.interior_angle = ros_msg.result.interior_angle
@@ -391,9 +379,6 @@ class shapes_statusServicer(ros_grpc.shapes_statusServicer):
             ros_msg_.goal_id.stamp.secs = pb_msg_.goal_id.stamp.secs
             ros_msg_.goal_id.stamp.nsecs = pb_msg_.goal_id.stamp.nsecs
             ros_msg_.goal_id.id = pb_msg_.goal_id.id
-            ros_msg_.stamp.secs = pb_msg_.stamp.secs
-            ros_msg_.stamp.nsecs = pb_msg_.stamp.nsecs
-            ros_msg_.id = pb_msg_.id
             ros_msg_.status = pb_msg_.status
             ros_msg_.text = pb_msg_.text
             ros_msg.status_list.append(ros_msg_)
@@ -429,9 +414,6 @@ class shapes_statusServicer(ros_grpc.shapes_statusServicer):
                     pb_msg_.goal_id.stamp.secs = ros_msg_.goal_id.stamp.secs
                     pb_msg_.goal_id.stamp.nsecs = ros_msg_.goal_id.stamp.nsecs
                     pb_msg_.goal_id.id = ros_msg_.goal_id.id
-                    pb_msg_.stamp.secs = ros_msg_.stamp.secs
-                    pb_msg_.stamp.nsecs = ros_msg_.stamp.nsecs
-                    pb_msg_.id = ros_msg_.id
                     pb_msg_.status = ros_msg_.status
                     pb_msg_.text = ros_msg_.text
                     pb_msg.status_list.append(pb_msg_)

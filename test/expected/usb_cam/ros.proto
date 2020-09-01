@@ -1,0 +1,384 @@
+
+syntax = 'proto3';
+
+package ros;
+
+message Empty {}
+
+message Time {
+  uint32 secs = 1;
+  uint32 nsecs = 2;
+}
+
+message Duration {
+  int32 secs = 1;
+  int32 nsecs = 2;
+}
+
+message dynamic_reconfigure {
+  message BoolParameter {
+    string name = 1;
+    bool value = 2;
+  }
+  message Config {
+    repeated dynamic_reconfigure.BoolParameter bools = 1;
+    repeated dynamic_reconfigure.IntParameter ints = 2;
+    repeated dynamic_reconfigure.StrParameter strs = 3;
+    repeated dynamic_reconfigure.DoubleParameter doubles = 4;
+    repeated dynamic_reconfigure.GroupState groups = 5;
+  }
+  message ConfigDescription {
+    repeated dynamic_reconfigure.Group groups = 1;
+    dynamic_reconfigure.Config max = 2;
+    dynamic_reconfigure.Config min = 3;
+    dynamic_reconfigure.Config dflt = 4;
+  }
+  message DoubleParameter {
+    string name = 1;
+    double value = 2;
+  }
+  message Group {
+    string name = 1;
+    string type = 2;
+    repeated dynamic_reconfigure.ParamDescription parameters = 3;
+    int32 parent = 4;
+    int32 id = 5;
+  }
+  message GroupState {
+    string name = 1;
+    bool state = 2;
+    int32 id = 3;
+    int32 parent = 4;
+  }
+  message IntParameter {
+    string name = 1;
+    int32 value = 2;
+  }
+  message ParamDescription {
+    string name = 1;
+    string type = 2;
+    uint32 level = 3;
+    string description = 4;
+    string edit_method = 5;
+  }
+  message ReconfigureRequest {
+    dynamic_reconfigure.Config config = 1;
+  }
+  message ReconfigureResponse {
+    dynamic_reconfigure.Config config = 1;
+  }
+  message StrParameter {
+    string name = 1;
+    string value = 2;
+  }
+}
+
+message nodelet {
+  message NodeletListRequest {
+  }
+  message NodeletListResponse {
+    repeated string nodelets = 1;
+  }
+  message NodeletLoadRequest {
+    string name = 1;
+    string type = 2;
+    repeated string remap_source_args = 3;
+    repeated string remap_target_args = 4;
+    repeated string my_argv = 5;
+    string bond_id = 6;
+  }
+  message NodeletLoadResponse {
+    bool success = 1;
+  }
+  message NodeletUnloadRequest {
+    string name = 1;
+  }
+  message NodeletUnloadResponse {
+    bool success = 1;
+  }
+}
+
+message roscpp {
+  message GetLoggersRequest {
+  }
+  message GetLoggersResponse {
+    repeated roscpp.Logger loggers = 1;
+  }
+  message Logger {
+    string name = 1;
+    string level = 2;
+  }
+  message SetLoggerLevelRequest {
+    string logger = 1;
+    string level = 2;
+  }
+  message SetLoggerLevelResponse {
+  }
+}
+
+message rosgraph_msgs {
+  /**
+   * DEBUG=1
+   * INFO=2
+   * WARN=4
+   * ERROR=8
+   * FATAL=16
+   */
+  message Log {
+    std_msgs.Header header = 1;
+    int32 level = 2;
+    string name = 3;
+    string msg = 4;
+    string file = 5;
+    string function = 6;
+    uint32 line = 7;
+    repeated string topics = 8;
+  }
+}
+
+message sensor_msgs {
+  message CameraInfo {
+    std_msgs.Header header = 1;
+    uint32 height = 2;
+    uint32 width = 3;
+    string distortion_model = 4;
+    repeated double D = 5;
+    repeated double K = 6;
+    repeated double R = 7;
+    repeated double P = 8;
+    uint32 binning_x = 9;
+    uint32 binning_y = 10;
+    sensor_msgs.RegionOfInterest roi = 11;
+  }
+  message CompressedImage {
+    std_msgs.Header header = 1;
+    string format = 2;
+    bytes data = 3;
+  }
+  message Image {
+    std_msgs.Header header = 1;
+    uint32 height = 2;
+    uint32 width = 3;
+    string encoding = 4;
+    uint32 is_bigendian = 5;
+    uint32 step = 6;
+    bytes data = 7;
+  }
+  message RegionOfInterest {
+    uint32 x_offset = 1;
+    uint32 y_offset = 2;
+    uint32 height = 3;
+    uint32 width = 4;
+    bool do_rectify = 5;
+  }
+  message SetCameraInfoRequest {
+    sensor_msgs.CameraInfo camera_info = 1;
+  }
+  message SetCameraInfoResponse {
+    bool success = 1;
+    string status_message = 2;
+  }
+}
+
+message std_msgs {
+  message Header {
+    uint32 seq = 1;
+    Time stamp = 2;
+    string frame_id = 3;
+  }
+}
+
+message std_srvs {
+  message EmptyRequest {
+  }
+  message EmptyResponse {
+  }
+}
+
+message theora_image_transport {
+  message Packet {
+    std_msgs.Header header = 1;
+    bytes data = 2;
+    int32 b_o_s = 3;
+    int32 e_o_s = 4;
+    int64 granulepos = 5;
+    int64 packetno = 6;
+  }
+}
+
+
+service image_view_output {
+    rpc Publish(sensor_msgs.Image) returns (Empty);
+    rpc Subscribe(Empty) returns (stream sensor_msgs.Image);
+}
+
+
+service image_view_parameter_descriptions {
+    rpc Publish(dynamic_reconfigure.ConfigDescription) returns (Empty);
+    rpc Subscribe(Empty) returns (stream dynamic_reconfigure.ConfigDescription);
+}
+
+
+service image_view_parameter_updates {
+    rpc Publish(dynamic_reconfigure.Config) returns (Empty);
+    rpc Subscribe(Empty) returns (stream dynamic_reconfigure.Config);
+}
+
+
+service rosout {
+    rpc Publish(rosgraph_msgs.Log) returns (Empty);
+    rpc Subscribe(Empty) returns (stream rosgraph_msgs.Log);
+}
+
+
+service rosout_agg {
+    rpc Publish(rosgraph_msgs.Log) returns (Empty);
+    rpc Subscribe(Empty) returns (stream rosgraph_msgs.Log);
+}
+
+
+service usb_cam_camera_info {
+    rpc Publish(sensor_msgs.CameraInfo) returns (Empty);
+    rpc Subscribe(Empty) returns (stream sensor_msgs.CameraInfo);
+}
+
+
+service usb_cam_image_raw {
+    rpc Publish(sensor_msgs.Image) returns (Empty);
+    rpc Subscribe(Empty) returns (stream sensor_msgs.Image);
+}
+
+
+service usb_cam_image_raw_compressed {
+    rpc Publish(sensor_msgs.CompressedImage) returns (Empty);
+    rpc Subscribe(Empty) returns (stream sensor_msgs.CompressedImage);
+}
+
+
+service usb_cam_image_raw_compressed_parameter_descriptions {
+    rpc Publish(dynamic_reconfigure.ConfigDescription) returns (Empty);
+    rpc Subscribe(Empty) returns (stream dynamic_reconfigure.ConfigDescription);
+}
+
+
+service usb_cam_image_raw_compressed_parameter_updates {
+    rpc Publish(dynamic_reconfigure.Config) returns (Empty);
+    rpc Subscribe(Empty) returns (stream dynamic_reconfigure.Config);
+}
+
+
+service usb_cam_image_raw_compressedDepth {
+    rpc Publish(sensor_msgs.CompressedImage) returns (Empty);
+    rpc Subscribe(Empty) returns (stream sensor_msgs.CompressedImage);
+}
+
+
+service usb_cam_image_raw_compressedDepth_parameter_descriptions {
+    rpc Publish(dynamic_reconfigure.ConfigDescription) returns (Empty);
+    rpc Subscribe(Empty) returns (stream dynamic_reconfigure.ConfigDescription);
+}
+
+
+service usb_cam_image_raw_compressedDepth_parameter_updates {
+    rpc Publish(dynamic_reconfigure.Config) returns (Empty);
+    rpc Subscribe(Empty) returns (stream dynamic_reconfigure.Config);
+}
+
+
+service usb_cam_image_raw_theora {
+    rpc Publish(theora_image_transport.Packet) returns (Empty);
+    rpc Subscribe(Empty) returns (stream theora_image_transport.Packet);
+}
+
+
+service usb_cam_image_raw_theora_parameter_descriptions {
+    rpc Publish(dynamic_reconfigure.ConfigDescription) returns (Empty);
+    rpc Subscribe(Empty) returns (stream dynamic_reconfigure.ConfigDescription);
+}
+
+
+service usb_cam_image_raw_theora_parameter_updates {
+    rpc Publish(dynamic_reconfigure.Config) returns (Empty);
+    rpc Subscribe(Empty) returns (stream dynamic_reconfigure.Config);
+}
+
+
+service image_view_get_loggers {
+    rpc Call(roscpp.GetLoggersRequest) returns (roscpp.GetLoggersResponse);
+}
+
+
+service image_view_list {
+    rpc Call(nodelet.NodeletListRequest) returns (nodelet.NodeletListResponse);
+}
+
+
+service image_view_load_nodelet {
+    rpc Call(nodelet.NodeletLoadRequest) returns (nodelet.NodeletLoadResponse);
+}
+
+
+service image_view_set_logger_level {
+    rpc Call(roscpp.SetLoggerLevelRequest) returns (roscpp.SetLoggerLevelResponse);
+}
+
+
+service image_view_set_parameters {
+    rpc Call(dynamic_reconfigure.ReconfigureRequest) returns (dynamic_reconfigure.ReconfigureResponse);
+}
+
+
+service image_view_unload_nodelet {
+    rpc Call(nodelet.NodeletUnloadRequest) returns (nodelet.NodeletUnloadResponse);
+}
+
+
+service rosout_get_loggers {
+    rpc Call(roscpp.GetLoggersRequest) returns (roscpp.GetLoggersResponse);
+}
+
+
+service rosout_set_logger_level {
+    rpc Call(roscpp.SetLoggerLevelRequest) returns (roscpp.SetLoggerLevelResponse);
+}
+
+
+service usb_cam_get_loggers {
+    rpc Call(roscpp.GetLoggersRequest) returns (roscpp.GetLoggersResponse);
+}
+
+
+service usb_cam_image_raw_compressed_set_parameters {
+    rpc Call(dynamic_reconfigure.ReconfigureRequest) returns (dynamic_reconfigure.ReconfigureResponse);
+}
+
+
+service usb_cam_image_raw_compressedDepth_set_parameters {
+    rpc Call(dynamic_reconfigure.ReconfigureRequest) returns (dynamic_reconfigure.ReconfigureResponse);
+}
+
+
+service usb_cam_image_raw_theora_set_parameters {
+    rpc Call(dynamic_reconfigure.ReconfigureRequest) returns (dynamic_reconfigure.ReconfigureResponse);
+}
+
+
+service usb_cam_set_camera_info {
+    rpc Call(sensor_msgs.SetCameraInfoRequest) returns (sensor_msgs.SetCameraInfoResponse);
+}
+
+
+service usb_cam_set_logger_level {
+    rpc Call(roscpp.SetLoggerLevelRequest) returns (roscpp.SetLoggerLevelResponse);
+}
+
+
+service usb_cam_start_capture {
+    rpc Call(std_srvs.EmptyRequest) returns (std_srvs.EmptyResponse);
+}
+
+
+service usb_cam_stop_capture {
+    rpc Call(std_srvs.EmptyRequest) returns (std_srvs.EmptyResponse);
+}
+

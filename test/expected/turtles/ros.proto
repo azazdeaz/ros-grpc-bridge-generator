@@ -34,10 +34,8 @@ message actionlib_msgs {
    */
   message GoalStatus {
     actionlib_msgs.GoalID goal_id = 1;
-    Time stamp = 2;
-    string id = 3;
-    uint32 status = 4;
-    string text = 5;
+    uint32 status = 2;
+    string text = 3;
   }
   message GoalStatusArray {
     std_msgs.Header header = 1;
