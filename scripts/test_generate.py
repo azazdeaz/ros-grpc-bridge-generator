@@ -13,7 +13,7 @@ from pathlib import Path
 import difflib
 import shutil
 
-PKG = 'grpc_api_generator'
+PKG = 'grpc_bridge_generator'
 rospack = rospkg.RosPack()
 
 SNAPSHOTS_PATH = join(rospack.get_path(PKG), 'test/snapshots')
@@ -52,7 +52,7 @@ class TestGeneratedPackages(unittest.TestCase):
 
     def test_generated_pkgs_look_as_expected(self):
         """Generate packages for each snapshot and compare them to ones in the in expected folder"""
-        generate_cmd = '''roslaunch grpc_api_generator generate.launch \
+        generate_cmd = '''roslaunch grpc_bridge_generator generate.launch \
                 keep_existing_snapshot:=true \
                 snapshot_path:={snapshot_path} \
                 pkg_name:={pkg_name} \

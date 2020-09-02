@@ -3,7 +3,7 @@
   <name>{{cookiecutter.pkg_name}}</name>
   <version>0.0.0</version>
   <description>Generated gRPC server</description>
-  <maintainer email="generator@ro.bot">robot</maintainer>
+  <maintainer email="generator@todo.todo">robot</maintainer>
   <license>MIT</license>
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>rospy</build_depend>

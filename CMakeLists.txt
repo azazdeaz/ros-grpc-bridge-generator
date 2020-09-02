@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(grpc_api_generator)
+project(grpc_bridge_generator)
 
 find_package(catkin REQUIRED COMPONENTS
   rospy

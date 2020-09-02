@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>grpc_api_generator</name>
+  <name>grpc_bridge_generator</name>
   <version>0.1.0</version>
-  <description>The grpc_api_generator package</description>
+  <description>The grpc_bridge_generator package</description>
 
   <maintainer email="azazdeaz@gmail.comros">azazdeaz</maintainer>
   

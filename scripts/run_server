@@ -7,5 +7,5 @@ if [ -f "$FILE" ]; then
     python3 grpc_server.py
     echo "$FILE exists."
 else 
-    echo "$FILE does not exist. Did you run 'rosrun grpc_api_generator generate'?"
+    echo "$FILE does not exist. Did you run 'roslaunch grpc_bridge_generator generate.launch'?"
 fi

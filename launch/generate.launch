@@ -1,5 +1,5 @@
 <launch>
-    <arg name="pkg_name" default="grpc_api"
+    <arg name="pkg_name" default="grpc_bridge"
         doc="Name of the new package" 
     />
     <arg name="pkgs_root" default=""
@@ -12,7 +12,7 @@
         doc="If true, if won't update the snapshots file"
     />
 
-    <node name="gen" pkg="grpc_api_generator" type="generate">
+    <node name="gen" pkg="grpc_bridge_generator" type="generate">
         <env name="ROS_NAMESPACE" value="gen" />
         <param name="pkg_name" value="$(arg pkg_name)" />
         <param name="pkgs_root" value="$(arg pkgs_root)" />
