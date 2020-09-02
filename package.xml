@@ -11,12 +11,12 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>rostest</build_depend>
   <build_depend>rospy</build_depend>
-  <build_depend>python-cookiecutter</build_depend>
+  <build_depend>python-cookiecutter-pip</build_depend>
   <build_depend>jupyter-notebook</build_depend>
   <build_depend>python3-papermill-pip</build_depend>
   <build_export_depend>rospy</build_export_depend>
   <exec_depend>rospy</exec_depend>
-  <exec_depend>python-cookiecutter</exec_depend>
+  <exec_depend>python-cookiecutter-pip</exec_depend>
   <exec_depend>jupyter-notebook</exec_depend>
   <exec_depend>python3-papermill-pip</exec_depend>
 </package>

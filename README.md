@@ -17,9 +17,9 @@
 Clone the repo into a catkin workspace:
 ```sh
 # in your_catkit_ws/src
-git clone git@github.com:azazdeaz/ros-grpc-bridge-generator.git
+git clone https://github.com/azazdeaz/ros-grpc-bridge-generator.git
 ```
-and run rosdep install
+install dependencies and build
 ```sh
 # in your_catkit_ws
 rosdep update
