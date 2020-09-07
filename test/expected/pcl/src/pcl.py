@@ -295,13 +295,9 @@ class rosout_aggServicer(ros_grpc.rosout_aggServicer):
 class my_pcl_tutorial_get_loggersServicer(ros_grpc.my_pcl_tutorial_get_loggersServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('roscpp/GetLoggers')
+        rospy.wait_for_service('/my_pcl_tutorial/get_loggers')
         call = rospy.ServiceProxy('/my_pcl_tutorial/get_loggers', Srv)
         ros_msg = Srv._request_class()
-        for pb_msg_ in pb_msg.loggers:
-            ros_msg_ = roslib.message.get_message_class('roscpp/Logger')()
-            ros_msg_.name = pb_msg_.name
-            ros_msg_.level = pb_msg_.level
-            ros_msg.loggers.append(ros_msg_)
 
         ros_msg = call(ros_msg)
         pb_msg = ros_pb.roscpp.GetLoggersResponse()
@@ -318,8 +314,11 @@ class my_pcl_tutorial_get_loggersServicer(ros_grpc.my_pcl_tutorial_get_loggersSe
 class my_pcl_tutorial_set_logger_levelServicer(ros_grpc.my_pcl_tutorial_set_logger_levelServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('roscpp/SetLoggerLevel')
+        rospy.wait_for_service('/my_pcl_tutorial/set_logger_level')
         call = rospy.ServiceProxy('/my_pcl_tutorial/set_logger_level', Srv)
         ros_msg = Srv._request_class()
+        ros_msg.logger = pb_msg.logger
+        ros_msg.level = pb_msg.level
 
         ros_msg = call(ros_msg)
         pb_msg = ros_pb.roscpp.SetLoggerLevelResponse()
@@ -331,13 +330,9 @@ class my_pcl_tutorial_set_logger_levelServicer(ros_grpc.my_pcl_tutorial_set_logg
 class rosout_get_loggersServicer(ros_grpc.rosout_get_loggersServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('roscpp/GetLoggers')
+        rospy.wait_for_service('/rosout/get_loggers')
         call = rospy.ServiceProxy('/rosout/get_loggers', Srv)
         ros_msg = Srv._request_class()
-        for pb_msg_ in pb_msg.loggers:
-            ros_msg_ = roslib.message.get_message_class('roscpp/Logger')()
-            ros_msg_.name = pb_msg_.name
-            ros_msg_.level = pb_msg_.level
-            ros_msg.loggers.append(ros_msg_)
 
         ros_msg = call(ros_msg)
         pb_msg = ros_pb.roscpp.GetLoggersResponse()
@@ -354,8 +349,11 @@ class rosout_get_loggersServicer(ros_grpc.rosout_get_loggersServicer):
 class rosout_set_logger_levelServicer(ros_grpc.rosout_set_logger_levelServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('roscpp/SetLoggerLevel')
+        rospy.wait_for_service('/rosout/set_logger_level')
         call = rospy.ServiceProxy('/rosout/set_logger_level', Srv)
         ros_msg = Srv._request_class()
+        ros_msg.logger = pb_msg.logger
+        ros_msg.level = pb_msg.level
 
         ros_msg = call(ros_msg)
         pb_msg = ros_pb.roscpp.SetLoggerLevelResponse()

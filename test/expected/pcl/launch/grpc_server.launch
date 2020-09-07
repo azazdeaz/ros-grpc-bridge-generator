@@ -1,5 +1,0 @@
-<launch>
-    <node name="run_grpc" pkg="pcl" type="run">
-        <param name="address" value="localhost:50051" />
-    </node>
-</launch>

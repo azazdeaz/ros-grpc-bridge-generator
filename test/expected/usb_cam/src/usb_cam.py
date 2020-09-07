@@ -1789,13 +1789,9 @@ class usb_cam_image_raw_theora_parameter_updatesServicer(ros_grpc.usb_cam_image_
 class image_view_get_loggersServicer(ros_grpc.image_view_get_loggersServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('roscpp/GetLoggers')
+        rospy.wait_for_service('/image_view/get_loggers')
         call = rospy.ServiceProxy('/image_view/get_loggers', Srv)
         ros_msg = Srv._request_class()
-        for pb_msg_ in pb_msg.loggers:
-            ros_msg_ = roslib.message.get_message_class('roscpp/Logger')()
-            ros_msg_.name = pb_msg_.name
-            ros_msg_.level = pb_msg_.level
-            ros_msg.loggers.append(ros_msg_)
 
         ros_msg = call(ros_msg)
         pb_msg = ros_pb.roscpp.GetLoggersResponse()
@@ -1812,10 +1808,9 @@ class image_view_get_loggersServicer(ros_grpc.image_view_get_loggersServicer):
 class image_view_listServicer(ros_grpc.image_view_listServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('nodelet/NodeletList')
+        rospy.wait_for_service('/image_view/list')
         call = rospy.ServiceProxy('/image_view/list', Srv)
         ros_msg = Srv._request_class()
-        for pb_msg_ in pb_msg.nodelets:
-            ros_msg.nodelets.append(pb_msg_)
 
         ros_msg = call(ros_msg)
         pb_msg = ros_pb.nodelet.NodeletListResponse()
@@ -1829,9 +1824,18 @@ class image_view_listServicer(ros_grpc.image_view_listServicer):
 class image_view_load_nodeletServicer(ros_grpc.image_view_load_nodeletServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('nodelet/NodeletLoad')
+        rospy.wait_for_service('/image_view/load_nodelet')
         call = rospy.ServiceProxy('/image_view/load_nodelet', Srv)
         ros_msg = Srv._request_class()
-        ros_msg.success = pb_msg.success
+        ros_msg.name = pb_msg.name
+        ros_msg.type = pb_msg.type
+        for pb_msg_ in pb_msg.remap_source_args:
+            ros_msg.remap_source_args.append(pb_msg_)
+        for pb_msg_ in pb_msg.remap_target_args:
+            ros_msg.remap_target_args.append(pb_msg_)
+        for pb_msg_ in pb_msg.my_argv:
+            ros_msg.my_argv.append(pb_msg_)
+        ros_msg.bond_id = pb_msg.bond_id
 
         ros_msg = call(ros_msg)
         pb_msg = ros_pb.nodelet.NodeletLoadResponse()
@@ -1844,8 +1848,11 @@ class image_view_load_nodeletServicer(ros_grpc.image_view_load_nodeletServicer):
 class image_view_set_logger_levelServicer(ros_grpc.image_view_set_logger_levelServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('roscpp/SetLoggerLevel')
+        rospy.wait_for_service('/image_view/set_logger_level')
         call = rospy.ServiceProxy('/image_view/set_logger_level', Srv)
         ros_msg = Srv._request_class()
+        ros_msg.logger = pb_msg.logger
+        ros_msg.level = pb_msg.level
 
         ros_msg = call(ros_msg)
         pb_msg = ros_pb.roscpp.SetLoggerLevelResponse()
@@ -1857,6 +1864,7 @@ class image_view_set_logger_levelServicer(ros_grpc.image_view_set_logger_levelSe
 class image_view_set_parametersServicer(ros_grpc.image_view_set_parametersServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('dynamic_reconfigure/Reconfigure')
+        rospy.wait_for_service('/image_view/set_parameters')
         call = rospy.ServiceProxy('/image_view/set_parameters', Srv)
         ros_msg = Srv._request_class()
         for pb_msg_ in pb_msg.config.bools:
@@ -1924,9 +1932,10 @@ class image_view_set_parametersServicer(ros_grpc.image_view_set_parametersServic
 class image_view_unload_nodeletServicer(ros_grpc.image_view_unload_nodeletServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('nodelet/NodeletUnload')
+        rospy.wait_for_service('/image_view/unload_nodelet')
         call = rospy.ServiceProxy('/image_view/unload_nodelet', Srv)
         ros_msg = Srv._request_class()
-        ros_msg.success = pb_msg.success
+        ros_msg.name = pb_msg.name
 
         ros_msg = call(ros_msg)
         pb_msg = ros_pb.nodelet.NodeletUnloadResponse()
@@ -1939,13 +1948,9 @@ class image_view_unload_nodeletServicer(ros_grpc.image_view_unload_nodeletServic
 class rosout_get_loggersServicer(ros_grpc.rosout_get_loggersServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('roscpp/GetLoggers')
+        rospy.wait_for_service('/rosout/get_loggers')
         call = rospy.ServiceProxy('/rosout/get_loggers', Srv)
         ros_msg = Srv._request_class()
-        for pb_msg_ in pb_msg.loggers:
-            ros_msg_ = roslib.message.get_message_class('roscpp/Logger')()
-            ros_msg_.name = pb_msg_.name
-            ros_msg_.level = pb_msg_.level
-            ros_msg.loggers.append(ros_msg_)
 
         ros_msg = call(ros_msg)
         pb_msg = ros_pb.roscpp.GetLoggersResponse()
@@ -1962,8 +1967,11 @@ class rosout_get_loggersServicer(ros_grpc.rosout_get_loggersServicer):
 class rosout_set_logger_levelServicer(ros_grpc.rosout_set_logger_levelServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('roscpp/SetLoggerLevel')
+        rospy.wait_for_service('/rosout/set_logger_level')
         call = rospy.ServiceProxy('/rosout/set_logger_level', Srv)
         ros_msg = Srv._request_class()
+        ros_msg.logger = pb_msg.logger
+        ros_msg.level = pb_msg.level
 
         ros_msg = call(ros_msg)
         pb_msg = ros_pb.roscpp.SetLoggerLevelResponse()
@@ -1975,13 +1983,9 @@ class rosout_set_logger_levelServicer(ros_grpc.rosout_set_logger_levelServicer):
 class usb_cam_get_loggersServicer(ros_grpc.usb_cam_get_loggersServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('roscpp/GetLoggers')
+        rospy.wait_for_service('/usb_cam/get_loggers')
         call = rospy.ServiceProxy('/usb_cam/get_loggers', Srv)
         ros_msg = Srv._request_class()
-        for pb_msg_ in pb_msg.loggers:
-            ros_msg_ = roslib.message.get_message_class('roscpp/Logger')()
-            ros_msg_.name = pb_msg_.name
-            ros_msg_.level = pb_msg_.level
-            ros_msg.loggers.append(ros_msg_)
 
         ros_msg = call(ros_msg)
         pb_msg = ros_pb.roscpp.GetLoggersResponse()
@@ -1998,6 +2002,7 @@ class usb_cam_get_loggersServicer(ros_grpc.usb_cam_get_loggersServicer):
 class usb_cam_image_raw_compressed_set_parametersServicer(ros_grpc.usb_cam_image_raw_compressed_set_parametersServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('dynamic_reconfigure/Reconfigure')
+        rospy.wait_for_service('/usb_cam/image_raw/compressed/set_parameters')
         call = rospy.ServiceProxy('/usb_cam/image_raw/compressed/set_parameters', Srv)
         ros_msg = Srv._request_class()
         for pb_msg_ in pb_msg.config.bools:
@@ -2065,6 +2070,7 @@ class usb_cam_image_raw_compressed_set_parametersServicer(ros_grpc.usb_cam_image
 class usb_cam_image_raw_compressedDepth_set_parametersServicer(ros_grpc.usb_cam_image_raw_compressedDepth_set_parametersServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('dynamic_reconfigure/Reconfigure')
+        rospy.wait_for_service('/usb_cam/image_raw/compressedDepth/set_parameters')
         call = rospy.ServiceProxy('/usb_cam/image_raw/compressedDepth/set_parameters', Srv)
         ros_msg = Srv._request_class()
         for pb_msg_ in pb_msg.config.bools:
@@ -2132,6 +2138,7 @@ class usb_cam_image_raw_compressedDepth_set_parametersServicer(ros_grpc.usb_cam_
 class usb_cam_image_raw_theora_set_parametersServicer(ros_grpc.usb_cam_image_raw_theora_set_parametersServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('dynamic_reconfigure/Reconfigure')
+        rospy.wait_for_service('/usb_cam/image_raw/theora/set_parameters')
         call = rospy.ServiceProxy('/usb_cam/image_raw/theora/set_parameters', Srv)
         ros_msg = Srv._request_class()
         for pb_msg_ in pb_msg.config.bools:
@@ -2199,10 +2206,31 @@ class usb_cam_image_raw_theora_set_parametersServicer(ros_grpc.usb_cam_image_raw
 class usb_cam_set_camera_infoServicer(ros_grpc.usb_cam_set_camera_infoServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('sensor_msgs/SetCameraInfo')
+        rospy.wait_for_service('/usb_cam/set_camera_info')
         call = rospy.ServiceProxy('/usb_cam/set_camera_info', Srv)
         ros_msg = Srv._request_class()
-        ros_msg.success = pb_msg.success
-        ros_msg.status_message = pb_msg.status_message
+        ros_msg.camera_info.header.seq = pb_msg.camera_info.header.seq
+        ros_msg.camera_info.header.stamp.secs = pb_msg.camera_info.header.stamp.secs
+        ros_msg.camera_info.header.stamp.nsecs = pb_msg.camera_info.header.stamp.nsecs
+        ros_msg.camera_info.header.frame_id = pb_msg.camera_info.header.frame_id
+        ros_msg.camera_info.height = pb_msg.camera_info.height
+        ros_msg.camera_info.width = pb_msg.camera_info.width
+        ros_msg.camera_info.distortion_model = pb_msg.camera_info.distortion_model
+        for pb_msg_ in pb_msg.camera_info.D:
+            ros_msg.camera_info.D.append(pb_msg_)
+        for pb_msg_ in pb_msg.camera_info.K:
+            ros_msg.camera_info.K.append(pb_msg_)
+        for pb_msg_ in pb_msg.camera_info.R:
+            ros_msg.camera_info.R.append(pb_msg_)
+        for pb_msg_ in pb_msg.camera_info.P:
+            ros_msg.camera_info.P.append(pb_msg_)
+        ros_msg.camera_info.binning_x = pb_msg.camera_info.binning_x
+        ros_msg.camera_info.binning_y = pb_msg.camera_info.binning_y
+        ros_msg.camera_info.roi.x_offset = pb_msg.camera_info.roi.x_offset
+        ros_msg.camera_info.roi.y_offset = pb_msg.camera_info.roi.y_offset
+        ros_msg.camera_info.roi.height = pb_msg.camera_info.roi.height
+        ros_msg.camera_info.roi.width = pb_msg.camera_info.roi.width
+        ros_msg.camera_info.roi.do_rectify = pb_msg.camera_info.roi.do_rectify
 
         ros_msg = call(ros_msg)
         pb_msg = ros_pb.sensor_msgs.SetCameraInfoResponse()
@@ -2216,8 +2244,11 @@ class usb_cam_set_camera_infoServicer(ros_grpc.usb_cam_set_camera_infoServicer):
 class usb_cam_set_logger_levelServicer(ros_grpc.usb_cam_set_logger_levelServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('roscpp/SetLoggerLevel')
+        rospy.wait_for_service('/usb_cam/set_logger_level')
         call = rospy.ServiceProxy('/usb_cam/set_logger_level', Srv)
         ros_msg = Srv._request_class()
+        ros_msg.logger = pb_msg.logger
+        ros_msg.level = pb_msg.level
 
         ros_msg = call(ros_msg)
         pb_msg = ros_pb.roscpp.SetLoggerLevelResponse()
@@ -2229,6 +2260,7 @@ class usb_cam_set_logger_levelServicer(ros_grpc.usb_cam_set_logger_levelServicer
 class usb_cam_start_captureServicer(ros_grpc.usb_cam_start_captureServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('std_srvs/Empty')
+        rospy.wait_for_service('/usb_cam/start_capture')
         call = rospy.ServiceProxy('/usb_cam/start_capture', Srv)
         ros_msg = Srv._request_class()
 
@@ -2242,6 +2274,7 @@ class usb_cam_start_captureServicer(ros_grpc.usb_cam_start_captureServicer):
 class usb_cam_stop_captureServicer(ros_grpc.usb_cam_stop_captureServicer):
     def Call(self, pb_msg, context):
         Srv = roslib.message.get_service_class('std_srvs/Empty')
+        rospy.wait_for_service('/usb_cam/stop_capture')
         call = rospy.ServiceProxy('/usb_cam/stop_capture', Srv)
         ros_msg = Srv._request_class()
 

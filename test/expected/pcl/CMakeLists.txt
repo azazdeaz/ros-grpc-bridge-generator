@@ -8,7 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package()
 
 catkin_install_python(PROGRAMS
-  nodes/run
+  nodes/server
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
@@ -16,4 +16,9 @@ catkin_python_setup()
 
 include_directories(
   ${catkin_INCLUDE_DIRS}
+)
+
+install(DIRECTORY
+  launch
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )

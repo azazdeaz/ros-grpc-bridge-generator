@@ -1,0 +1,7 @@
+<launch>
+    <arg name="address" default="[::]:50051" />
+
+    <node name="run_grpc" pkg="usb_cam" type="server">
+        <param name="address" value="$(arg address)" />
+    </node>
+</launch>
