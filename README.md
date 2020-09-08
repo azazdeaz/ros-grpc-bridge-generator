@@ -1,8 +1,17 @@
-:construction: WIP
-
 # ROS - gRPC bridge generator
 ### *Experimental gRPC server generator to mirror arbitrary ROS topics and services*
 
+ - [How it works?](#how-it-works?)
+ - [Notes](#notes)
+ - [Install](#install)
+ - [Usage](#usage)
+ - [Example](#example)
+ - [Development](#development)
+ - [Tests](#tests)
+ - [Notes on the snapshot file](#notes-on-the-snapshot-file)
+
+![](images/demo.gif)
+ 
 ## How it works?
  - The script creates a snapshot of all the running ROS topics and services available at the moment,
  - then generates a standalone package in your catkin workspace which implements the gRPC server as a ROS node.
