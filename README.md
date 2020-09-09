@@ -1,7 +1,7 @@
 # ROS - gRPC bridge generator
 ### *Experimental gRPC server generator to mirror arbitrary ROS topics and services*
 
- - [How it works?](#how-it-works?)
+ - [How it works?](#how-it-works)
  - [Notes](#notes)
  - [Install](#install)
  - [Usage](#usage)
@@ -14,13 +14,13 @@
  
 ## How it works?
  - The script creates a snapshot of all the running ROS topics and services available at the moment,
- - then generates a standalone package in your catkin workspace which implements the gRPC server as a ROS node.
+ - then generates a standalone package in your catkin workspace, which implements the gRPC server as a ROS node.
  
 ## Notes
- - Protobuf has no equivalent for constants in ROS messages so they are added as comments to the proto message definitions.
+ - Protobuf has no equivalent for constants in ROS messages, so they are added as comments to the proto message definitions.
  - `uint8[]` and `char[]` ROS array types are represented as `bytes` in Protobuf (like in the [python msg generator](http://docs.ros.org/indigo/api/rospy_message_converter/html/namespacerospy__message__converter_1_1message__converter.html#ab92670982d5f9db6e765deff0ed9eeff))
  - Only ROS Noetic is supported (because it needs python3) 
- - The whole generator is implemented as a Jupyter notebook and a cookiecutter template so feel free to try changes and suggest modifications :)
+ - The whole generator is implemented as a Jupyter notebook and a cookiecutter template, so feel free to try changes and suggest modifications :)
 
 ## Install
 Clone the repo into a catkin workspace:
@@ -60,7 +60,7 @@ roslaunch grpc_bridge server.launch
 You can find an example catkin workspace at https://github.com/azazdeaz/ros-grpc-bridge-generator-example
 
 ## Development
-The script is implemented as a Jupyter Notebook, so it's quite easy to poke around and tailor the generator for your project.
+The script is implemented as a Jupyter Notebook, so it's easy to poke around and tailor the generator for your project.
 
 To launch the editor, just run:
 ```
@@ -72,7 +72,7 @@ Executing this notebook is equivalent to running `generate.launch`.
 
 The end-to-end tests are a bunch of snapshot files in the test/snapshots folder and their pre-generated packages in the test/expected folder.
 
-Running `rostest grpc_bridge_generator generate.test` will regenerate these packages in the test/result folder and compare them with the expected folder. It will fail for any changes. To update the tests just override the files in the expected folder.
+Running `rostest grpc_bridge_generator generate.test` will regenerate these packages in the test/result folder and compare them with the expected folder. It will fail for any changes. To update the tests, override the files in the test/expected folder.
 
 To add a new test, copy a snapshot file in test/snapshots, run the tests, and move the generated pkg from the result to the expected folder.
 
@@ -84,4 +84,4 @@ There are also some doctests in the generate.ipynb but only to make the developm
  - You can tell the generate script to use an edited snapshot instead of generating a new one [(see options)](launch/generate.launch)
  - Has three sections: `TOPICS`, `SERVICES`, and `MESSAGE_DEFINITIONS`
  - Keys are ordered alphabetically for easier editing/diffing
- - Nested message definitions are flattened
+ - Nested message definitions are normalized (flattened)
