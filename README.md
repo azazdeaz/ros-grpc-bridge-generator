@@ -53,7 +53,7 @@ catkin_make
 ```sh
 roslaunch grpc_bridge server.launch
 ```
-- see the available arguments in [server.launch](template/{{cookiecutter.pkg_name}}/launch/grpc_server.launch)
+- see the available arguments in [server.launch](template/{{cookiecutter.pkg_name}}/launch/server.launch)
 
 ## Example
 
