@@ -1,5 +1,5 @@
 # ROS - gRPC bridge generator
-### *Experimental gRPC server generator to mirror arbitrary ROS topics and services*
+### *Experimental gRPC server generator to mirror ROS topics and services*
 
  - [How it works?](#how-it-works)
  - [Notes](#notes)
